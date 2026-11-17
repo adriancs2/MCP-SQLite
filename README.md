@@ -59,7 +59,10 @@ MCP SQLite is a standard **stdio** MCP server: the client starts
 at the full path of the executable.
 
 **Claude Desktop** (including its Code tab): add this to `claude_desktop_config.json`, then restart
-Claude Desktop. The easiest way to open the file is Settings → Developer → Edit Config.
+Claude Desktop. The easiest way to open the file is Settings → Developer → Edit Config. With the
+current Windows installer it is at
+`%USERPROFILE%\AppData\Local\Claude-Data\claude_pzs8sxrjxfjjc\claude_desktop_config.json`
+(older installs: `%APPDATA%\Claude\claude_desktop_config.json`).
 
 ```json
 {
