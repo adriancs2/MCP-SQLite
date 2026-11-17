@@ -1,0 +1,27 @@
+MCP SQLite — read, write and inspect SQLite database files as MCP tools.
+
+Every tool takes a full physical path to the database file. There is no
+sandbox: any .db file the user account can open is reachable.
+
+Typical workflow:
+1. sqlite_list_databases to find database files under a folder
+   (.db / .sqlite / .sqlite3 / .db3 by default).
+2. sqlite_schema to see tables, columns, indexes and CREATE statements before
+   writing queries. Omit 'tables' (or pass ["*"]) for all tables.
+3. sqlite_query to run SQL — reads and writes in one tool:
+   - 'sql' for a single statement, or 'statements' (array) for several.
+   - A 'statements' batch runs in ONE transaction: if any statement fails,
+     the whole batch is rolled back and the error names the failing statement.
+   - SELECT / PRAGMA results are capped at 50 rows by default; pass max_rows
+     for more. format: ascii (default), json, csv or markdown.
+   - VACUUM, ATTACH, DETACH and PRAGMA journal_mode=... run outside a
+     transaction automatically.
+4. sqlite_create_database to create a new, empty database file. sqlite_query
+   never creates a file, so a mistyped path fails instead of silently making
+   an empty database.
+
+Tips:
+- Foreign key enforcement is ON for every connection.
+- Prefer format="json" when you need to parse values; NULL becomes a real
+  null and numbers stay numbers.
+- Use LIMIT / WHERE in SELECTs on large tables rather than raising max_rows.
